@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Star from './star';
 
+import { View, StyleSheet } from 'react-native';
+
 class StarRatings extends React.Component {
   state = {
     highestStarHovered: -Infinity
@@ -9,12 +11,11 @@ class StarRatings extends React.Component {
   fillId = `starGrad${Math.random().toFixed(15).slice(2)}`;
 
   get starRatingsStyle() {
-    const starRatingsStyle = {
-      position: 'relative',
-      boxSizing: 'border-box',
-      display: 'inline-block'
-    };
-    return this.props.ignoreInlineStyles ? {} : starRatingsStyle;
+		const { containerStyle } = this.props;
+		const defaultStyle = {
+			flexDirection: 'row'
+		};
+    return this.props.ignoreInlineStyles ? {} : { ...defaultStyle, ...StyleSheet.flatten(containerStyle)};
   }
 
   get starGradientStyle() {
@@ -152,7 +153,7 @@ class StarRatings extends React.Component {
     } = this.props;
     
     return (
-      <div
+      <View
         className="star-ratings"
         title={this.titleText}
         style={this.starRatingsStyle}
@@ -171,7 +172,7 @@ class StarRatings extends React.Component {
           </defs>
         </svg>
         {this.renderStars}
-      </div>
+      </View>
     );
   }
 }
@@ -189,7 +190,8 @@ StarRatings.propTypes = {
   ignoreInlineStyles: PropTypes.bool.isRequired,
   svgIconPath: PropTypes.string.isRequired,
   svgIconViewBox: PropTypes.string.isRequired,
-  name: PropTypes.string
+	name: PropTypes.string,
+	containerStyle: PropTypes.object
 };
 
 StarRatings.defaultProps = {
@@ -205,7 +207,8 @@ StarRatings.defaultProps = {
   gradientPathName: '',
   ignoreInlineStyles: false,
   svgIconPath: 'm25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z',
-  svgIconViewBox: '0 0 51 48'
+	svgIconViewBox: '0 0 51 48',
+	containerStyle: {}
 };
 
 export default StarRatings;
