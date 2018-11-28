@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -17,6 +19,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _star = require('./star');
 
 var _star2 = _interopRequireDefault(_star);
+
+var _reactNative = require('react-native');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73,7 +77,7 @@ var StarRatings = function (_React$Component) {
 
 
       return _react2.default.createElement(
-        'div',
+        _reactNative.View,
         {
           className: 'star-ratings',
           title: this.titleText,
@@ -104,12 +108,12 @@ var StarRatings = function (_React$Component) {
   }, {
     key: 'starRatingsStyle',
     get: function get() {
-      var starRatingsStyle = {
-        position: 'relative',
-        boxSizing: 'border-box',
-        display: 'inline-block'
+      var containerStyle = this.props.containerStyle;
+
+      var defaultStyle = {
+        flexDirection: 'row'
       };
-      return this.props.ignoreInlineStyles ? {} : starRatingsStyle;
+      return this.props.ignoreInlineStyles ? {} : _extends({}, defaultStyle, _reactNative.StyleSheet.flatten(containerStyle));
     }
   }, {
     key: 'starGradientStyle',
@@ -240,7 +244,8 @@ StarRatings.propTypes = {
   ignoreInlineStyles: _propTypes2.default.bool.isRequired,
   svgIconPath: _propTypes2.default.string.isRequired,
   svgIconViewBox: _propTypes2.default.string.isRequired,
-  name: _propTypes2.default.string
+  name: _propTypes2.default.string,
+  containerStyle: _propTypes2.default.object
 };
 
 StarRatings.defaultProps = {
@@ -256,7 +261,8 @@ StarRatings.defaultProps = {
   gradientPathName: '',
   ignoreInlineStyles: false,
   svgIconPath: 'm25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z',
-  svgIconViewBox: '0 0 51 48'
+  svgIconViewBox: '0 0 51 48',
+  containerStyle: {}
 };
 
 exports.default = StarRatings;
